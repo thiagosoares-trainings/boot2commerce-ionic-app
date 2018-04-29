@@ -1,0 +1,8 @@
+{
+  "name": "boot2loja",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
