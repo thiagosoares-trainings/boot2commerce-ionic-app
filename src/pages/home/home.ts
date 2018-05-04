@@ -25,12 +25,13 @@ export class HomePage {
     console.log(this.creds);
     
     this.auth.authenticate(this.creds).subscribe(resp => {
-      console.log(resp.headers.get('Authorization'));
-
-      //this.navCtrl.push('CategoriasPage');
+      this.auth.succesfulLogin(resp.headers.get('Authorization'));
+       //this.navCtrl.push('CategoriasPage');
       this.navCtrl.setRoot('CategoriasPage');
      
-    }, error => {});
+    }, error => {
+      this.auth.logout();
+    });
 
   }
 
