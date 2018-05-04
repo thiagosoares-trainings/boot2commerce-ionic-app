@@ -1,6 +1,7 @@
 import { CredenciasDto } from './../../models/credenciais.dto';
 import { Component } from '@angular/core';
 import { NavController, IonicPage, MenuController } from 'ionic-angular';
+import { AuthService } from '../../services/auth.service';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,7 @@ export class HomePage {
     senha: ""
   }
 
-  constructor(public navCtrl: NavController, public memu: MenuController) {
+  constructor(public navCtrl: NavController, public memu: MenuController, public auth: AuthService) {
 
   }
 
@@ -23,9 +24,14 @@ export class HomePage {
 
     console.log(this.creds);
     
+    this.auth.authenticate(this.creds).subscribe(resp => {
+      console.log(resp.headers.get('Authorization'));
 
-    //this.navCtrl.push('CategoriasPage');
-    this.navCtrl.setRoot('CategoriasPage');
+      //this.navCtrl.push('CategoriasPage');
+      this.navCtrl.setRoot('CategoriasPage');
+     
+    }, error => {});
+
   }
 
   ionViewWillEnter() {
