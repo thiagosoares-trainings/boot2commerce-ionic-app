@@ -28,8 +28,7 @@ export class CategoriasPage {
     console.log('ionViewDidLoad CategoriasPage');
     this.categoriaService.findAll()
         .subscribe(response => { this.items = response; }, 
-                      error => {console.log(error);
-        } );
+                      error => { } );
     
   }
 
