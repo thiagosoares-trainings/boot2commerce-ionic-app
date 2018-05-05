@@ -1,3 +1,6 @@
+import { API_CONFIG } from './../../config/api.config';
+import { ClienteService } from './../../services/cliente.service';
+import { ClienteDto } from './../../models/cliente.dto';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
@@ -16,11 +19,12 @@ import { StorageService } from '../../services/storage.service';
 })
 export class ProfilePage {
 
-  email: string;
+  cliente: ClienteDto;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              public storage: StorageService
+              public storage: StorageService,
+              public clienteService: ClienteService
             ) {
   }
 
@@ -29,9 +33,20 @@ export class ProfilePage {
     let user = this.storage.getLocaUser();
 
     if(user && user.email) {
-      this.email = user.email;
+      this.clienteService.findByEmail(user.email).subscribe(response => {
+        this.cliente = response;
+        //GET Imagen into Bucket
+        this.getImageIfExist();
+      }, 
+    error => {});
     }
 
+  }
+
+  getImageIfExist() {
+    this.clienteService.getImageFromBucket(this.cliente.id).subscribe(response => {
+      this.cliente.imageUrl = `${API_CONFIG.bucketBaseUrl}/cp${this.cliente.id}.jpg`;
+    }, error => {});
   }
 
 }
