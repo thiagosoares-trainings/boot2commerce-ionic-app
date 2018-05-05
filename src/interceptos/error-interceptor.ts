@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpSentEvent, HttpHeaderRes
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
-export class ErrorIntercptor implements HttpInterceptor {
+export class ErrorInterceptor implements HttpInterceptor {
     
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
         
@@ -27,9 +27,9 @@ export class ErrorIntercptor implements HttpInterceptor {
     }
 }
 
-export const ErrorIntercptorProvider = {
+export const ErrorInterceptorProvider = {
 
     provide: HTTP_INTERCEPTORS,
-    useClass: ErrorIntercptor, 
+    useClass: ErrorInterceptor, 
     multi: true,
 }
