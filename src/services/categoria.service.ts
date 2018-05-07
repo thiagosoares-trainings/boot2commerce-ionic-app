@@ -12,6 +12,6 @@ export class CategoriaService {
     constructor(public http: HttpClient) { }
 
     findAll(): Observable<CategoriDto[]> {
-        return this.http.get<CategoriDto[]>(`${API_CONFIG.baseUrl}/categorias`);
+        return this.http.get<CategoriDto[]>(`${API_CONFIG.baseUrl}/categorias1`);
     }
 }
