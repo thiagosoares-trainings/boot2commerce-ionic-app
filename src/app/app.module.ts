@@ -14,8 +14,6 @@ import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ErrorInterceptorProvider } from '../interceptos/error-interceptor';
-import { CidadeService } from '../services/cidade.service';
-import { EstadoService } from '../services/estado.service';
 import { ImageUtilService } from '../services/image-util.service';
 
 @NgModule({
@@ -41,8 +39,6 @@ import { ImageUtilService } from '../services/image-util.service';
     CategoriaService, 
     StorageService,
     ClienteService, 
-    CidadeService, 
-    EstadoService,
     ImageUtilService
   ]
 })
