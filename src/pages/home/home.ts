@@ -20,9 +20,6 @@ export class HomePage {
   }
 
   login() {
-
-    console.log(this.creds);
-    
     this.auth.authenticate(this.creds).subscribe(resp => {
       this.auth.succesfulLogin(resp.headers.get('Authorization'));
        //this.navCtrl.push('CategoriasPage');
@@ -31,8 +28,13 @@ export class HomePage {
     }, error => {
       this.auth.logout();
     });
-
   }
+
+  signup() {
+    this.navCtrl.push('SignupPage')
+  }
+
+  
 
   ionViewWillEnter() {
     this.memu.swipeEnable(false);
