@@ -31,7 +31,13 @@ export class ProfilePage {
         //GET Imagen into Bucket
         this.getImageIfExist();
       }, 
-    error => {});
+      error => {
+        if(error.status == 403) {
+          this.navCtrl.setRoot('HomePage');
+        }
+      });
+    } else {
+      this.navCtrl.setRoot('HomePage');
     }
 
   }
