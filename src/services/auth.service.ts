@@ -18,8 +18,6 @@ export class AuthService {
     }
 
     refreshToken() {
-        console.log(">>>>>>>>>>>>>>>>>>  Refresh Tokenn");
-        
         return this.http.get(`${API_CONFIG.baseUrl}/auth/refresh_token`, {observe: 'response', responseType: 'text'})
     }
 
