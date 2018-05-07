@@ -17,7 +17,6 @@ export class HomePage {
   }
 
   constructor(public navCtrl: NavController, public memu: MenuController, public auth: AuthService) {
-
   }
 
   login() {
@@ -41,6 +40,17 @@ export class HomePage {
 
   ionViewDidLeave() {
     this.memu.swipeEnable(true);
+  }
+
+  ionViewDidEnter() {
+    this.auth.refreshToken().subscribe(resp => {
+      this.auth.succesfulLogin(resp.headers.get('Authorization'));
+       //this.navCtrl.push('CategoriasPage');
+      this.navCtrl.setRoot('CategoriasPage');
+     
+    }, error => {
+      this.auth.logout();
+    });
   }
 
 }
