@@ -102,6 +102,10 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
     private listErrors(messages : FieldMessage[]) : string {
+
+        console.log(messages);
+        
+
         let s : string = '';
         for (var i=0; i<messages.length; i++) {
             s = s + '<p><strong>' + messages[i].fieldName + "</strong>: " + messages[i].message + '</p>';
