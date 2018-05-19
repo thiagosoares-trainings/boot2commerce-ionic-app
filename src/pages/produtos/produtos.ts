@@ -1,3 +1,5 @@
+import { API_CONFIG } from './../../config/api.config';
+import { ProdutoService } from './../../services/produto.service';
 import { ProdutoDTO } from './../../models/produto.dto';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -18,20 +20,37 @@ export class ProdutosPage {
 
   items: ProdutoDTO[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public produtoService: ProdutoService, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProdutosPage');
 
-    this.items = [
-      {
-        id: "1", nome:"Teste 01", preco: 10
-      },
-      {
-        id: "2", nome:"Teste 02", preco: 20
-      }
-    ];
+    let categoriaId = this.navParams.get("categoriaId");
+
+    if(categoriaId) {
+      
+      this.produtoService.findByCategoria(categoriaId)
+          .subscribe(response => {
+            this.items = response['content'];
+  
+            this.items.forEach(item => {
+              
+              this.produtoService.getSmallImage(item.id)
+                  .subscribe(img => {
+                    item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
+                  }, 
+                  error => {
+                  });
+
+            });
+          },
+        error => {});
+
+    } else {
+      this.navCtrl.setRoot('CategoriasPage')
+    }
+
   }
 
 }
