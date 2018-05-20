@@ -39,8 +39,12 @@ export class ProdutosPage {
               this.produtoService.getSmallImage(item.id)
                   .subscribe(img => {
                     item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
+                    console.log('################################### ' + item.id + ' OK');
+                    
                   }, 
                   error => {
+                    item.imageUrl = null;
+                    console.log('################################### ' + item.id + ' ERRROR');
                   });
 
             });
@@ -51,6 +55,11 @@ export class ProdutosPage {
       this.navCtrl.setRoot('CategoriasPage')
     }
 
+  }
+
+
+  showDetail(produtoId: string) {
+    this.navCtrl.push('ProdutoDetailPage', {produtoId: produtoId});
   }
 
 }
