@@ -22,7 +22,6 @@ export class HomePage {
   login() {
     this.auth.authenticate(this.creds).subscribe(resp => {
       this.auth.succesfulLogin(resp.headers.get('Authorization'));
-       //this.navCtrl.push('CategoriasPage');
       this.navCtrl.setRoot('CategoriasPage');
      
     }, error => {
@@ -33,8 +32,6 @@ export class HomePage {
   signup() {
     this.navCtrl.push('SignupPage')
   }
-
-  
 
   ionViewWillEnter() {
     this.memu.swipeEnable(false);
@@ -47,9 +44,7 @@ export class HomePage {
   ionViewDidEnter() {
     this.auth.refreshToken().subscribe(resp => {
       this.auth.succesfulLogin(resp.headers.get('Authorization'));
-       //this.navCtrl.push('CategoriasPage');
       this.navCtrl.setRoot('CategoriasPage');
-     
     }, error => {
       this.auth.logout();
     });

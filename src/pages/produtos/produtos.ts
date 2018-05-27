@@ -39,12 +39,9 @@ export class ProdutosPage {
               this.produtoService.getSmallImage(item.id)
                   .subscribe(img => {
                     item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
-                    console.log('################################### ' + item.id + ' OK');
-                    
                   }, 
                   error => {
                     item.imageUrl = null;
-                    console.log('################################### ' + item.id + ' ERRROR');
                   });
 
             });
