@@ -18,7 +18,8 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 })
 export class ProdutosPage {
 
-  items: ProdutoDTO[];
+  page: number = 0;
+  items: ProdutoDTO[] = [];
 
   constructor(public produtoService: ProdutoService, 
               public navCtrl: NavController, 
@@ -27,9 +28,7 @@ export class ProdutosPage {
   }
 
   ionViewDidLoad() {
-    
     this.loadData();
-
   }
 
   loadData() {
@@ -41,12 +40,15 @@ export class ProdutosPage {
       
       let loader = this.presentLoading();
 
-      this.produtoService.findByCategoria(categoriaId)
+      this.produtoService.findByCategoria(categoriaId, this.page, 6)
           .subscribe(response => {
-            this.items = response['content'];
-            loader.dismiss();
-            this.items.forEach(item => {
-              
+
+            let newItems = response['content'] as ProdutoDTO[];
+                        
+            console.log(this.page);
+            console.log(newItems);
+                                    
+            newItems.forEach(item => {  
               this.produtoService.getSmallImage(item.id)
                   .subscribe(img => {
                     item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
@@ -54,8 +56,11 @@ export class ProdutosPage {
                   error => {
                     item.imageUrl = null;
                   });
-
             });
+            
+            this.items = this.items.concat( newItems );
+            
+            loader.dismiss();
           },
         error => {});
 
@@ -64,7 +69,6 @@ export class ProdutosPage {
     }
 
   }
-
 
   showDetail(produtoId: string) {
     this.navCtrl.push('ProdutoDetailPage', {produtoId: produtoId});
@@ -79,10 +83,23 @@ export class ProdutosPage {
   }
 
   doRefresh(refresher) {
+    
+    this.page = 0;
+    this.items = [];
+
     this.loadData();
     setTimeout(() => {
       refresher.complete();
-    }, 2000);
+    }, 1000);
   }
 
+  doInfinite(infiniteScroll) {
+
+    this.page++;
+    this.loadData();
+
+    setTimeout(() => {
+      infiniteScroll.complete();
+    }, 1000);
+  }
 }
