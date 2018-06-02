@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class StorageService {
 
-    getLocaUser(): LocalUser {
+    getLocalUser(): LocalUser {
 
         let user = localStorage.getItem(API_CONFIG.localUser);
 

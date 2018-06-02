@@ -23,7 +23,7 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     
-    let user = this.storage.getLocaUser();
+    let user = this.storage.getLocalUser();
 
     if(user && user.email) {
       this.clienteService.findByEmail(user.email).subscribe(response => {
