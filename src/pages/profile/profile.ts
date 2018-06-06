@@ -26,7 +26,10 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-    
+    this.loadData();
+  }
+
+  loadData() { 
     let user = this.storage.getLocalUser();
 
     if(user && user.email) {
@@ -72,7 +75,19 @@ export class ProfilePage {
      // Handle error
     });
 
-
   }
 
+  sendPicture() {
+    this.clienteService.uploadPicture(this.picture)
+        .subscribe(response => {
+          this.picture = null;
+          this.loadData();
+        }, error => {
+
+        });
+  }
+
+  cancel() {
+    this.picture = null;
+  }
 }
